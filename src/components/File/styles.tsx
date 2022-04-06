@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-
+import { COLORS } from '../../theme/colors';
 export const styles = StyleSheet.create({
   container: {
     flexDirection:'row',
@@ -10,5 +10,6 @@ export const styles = StyleSheet.create({
   fileName:{
     marginLeft:8,
     fontSize:18
+    
   }
 });

@@ -14,13 +14,13 @@ export function Header(){
         <View style={styles.menuContainer}>
           <Entypo name={"menu"} size={40} color={"white"} style={styles.icon}/>
           <View style={styles.textContainer}>
-          <Text>
-           Arquivos
-          </Text>
-          <Text>
-            DESENV. DE APLICAÇÕES DIST.
-          </Text>
-        </View>
+            <Text style={styles.headerText}>
+              Arquivos
+            </Text>
+            <Text style={styles.headerText}>
+              DESENV. DE APLICAÇÕES DIST.
+            </Text>
+          </View>
 
         </View>
         

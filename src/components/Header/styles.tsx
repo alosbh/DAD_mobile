@@ -17,7 +17,8 @@ export const styles = StyleSheet.create({
   textContainer:{
     marginLeft:12
   },
-  icon:{
+  headerText:{
+    color:COLORS.WHITE
 
   }
 });
