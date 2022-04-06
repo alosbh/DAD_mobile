@@ -4,14 +4,14 @@ import {
   View
 } from 'react-native';
 import { File } from '../File';
+import { Folder } from '../Folder';
 import { styles } from './styles';
 
 export function FileList(){
   return (
     <View>
-      <File data={{filename:"Arquivo PDF",icon:'pdffile1'}}/>
-      <File data={{filename:"Arquivo PPT",icon:'pptfile1'}}/>
-      <File data={{filename:"Arquivo DOCX",icon:'wordfile1'}}/>
+      <Folder data={{folderName:"Pasta 1"}}/>
+      <Folder data={{folderName:"Pasta 2"}}/>
     </View>
   );
 }
