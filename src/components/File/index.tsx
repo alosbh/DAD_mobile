@@ -8,9 +8,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { styles } from './styles';
 
 export type FileProps = {
-  
+  fileId: string,
   filename: string,
-  icon: string
+  icon: string,
+  url: string
   
 }
 type Props = {

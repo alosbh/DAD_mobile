@@ -1,17 +1,38 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   View
 } from 'react-native';
 import { File } from '../File';
-import { Folder } from '../Folder';
+import { Folder, FolderProps } from '../Folder';
 import { styles } from './styles';
+import { api } from '../../services/api';
+const subjectId=4;
 
 export function FileList(){
+
+  const [topics, setTopics] = useState<FolderProps[]>([]);
+
+  useEffect(()=>{
+    async function fetchMessages(){
+      
+      // const messagesResponse = await api.get<FolderProps[]>(`/topics/${subjectId}`);
+      const topicsResponse = [{folderId:"1",folderName:"Avisos",files:[{fileId:"1",filename:"Inicio das Aulas",icon:"pdffile1",url:"about:blank"},{fileId:"2",filename:"Cronograma",icon:"pptfile1",url:"about:blank"}]},
+      {folderId:"2",folderName:"Aulas",files:[{fileId:"3",filename:"Modulo 1",icon:"pdffile1",url:"about:blank"},{fileId:"4",filename:"Modulo 2",icon:"pdffile1",url:"about:blank"},{fileId:"5",filename:"Modulo 3",icon:"pdffile1",url:"about:blank"}]}]
+      
+      
+      setTopics(topicsResponse);
+       
+    }
+    fetchMessages();
+  },[])
+
   return (
-    <View>
-      <Folder data={{folderName:"Pasta 1"}}/>
-      <Folder data={{folderName:"Pasta 2"}}/>
+    <View style={styles.container}>
+      {topics.map((topic)=>(
+        <Folder key={topic.folderId} data={{folderId:topic.folderId,folderName:topic.folderName,files:topic.files}}/>
+      ))}
+         
     </View>
   );
 }

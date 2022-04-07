@@ -3,14 +3,14 @@ import React,{useState,FC} from 'react';
 import {
   View, Text,TouchableOpacity
 } from 'react-native';
-import { File } from '../File';
+import { File, FileProps } from '../File';
 import { FontAwesome } from '@expo/vector-icons';
 import { styles } from './styles';
 
 export type FolderProps = {
-  
+  folderId: string,
   folderName: string
-  
+  files: FileProps[]
   
 }
 type Props = {
@@ -37,9 +37,10 @@ export function Folder({data}:Props){
         {isOpened ? 
         
         <View>
-            <File data={{filename:"Arquivo PDF",icon:'pdffile1'}}/>
-            <File data={{filename:"Arquivo PPT",icon:'pptfile1'}}/>
-            <File data={{filename:"Arquivo DOCX",icon:'wordfile1'}}/>
+          {data.files.map((file)=>(
+            <File key={file.fileId} data={{fileId:file.fileId, filename:file.filename,icon:file.icon,url:file.url}}/>
+          ))}
+            
         </View>
         
         :<></>}

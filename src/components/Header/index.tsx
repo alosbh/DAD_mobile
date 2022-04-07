@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  View, Text
+  View, Text, TouchableOpacity
 } from 'react-native';
 
 import {FontAwesome, Entypo} from '@expo/vector-icons'
@@ -12,10 +12,13 @@ export function Header(){
   return (
     <View style={styles.container}>
         <View style={styles.menuContainer}>
-          <Entypo name={"menu"} size={40} color={"white"} style={styles.icon}/>
+          <TouchableOpacity>
+            <Entypo name={"menu"} size={40} color={"white"}/>
+          </TouchableOpacity>
+          
           <View style={styles.textContainer}>
             <Text style={styles.headerText}>
-              Arquivos
+              Arquivoss
             </Text>
             <Text style={styles.headerText}>
               DESENV. DE APLICAÇÕES DIST.
@@ -25,7 +28,7 @@ export function Header(){
         </View>
         
       
-      <FontAwesome name={"search"} size={24} color={"white"} style={styles.icon}/>
+      <FontAwesome name={"search"} size={24} color={"white"}/>
       
     </View>
   );
