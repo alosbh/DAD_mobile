@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal:20,
     paddingVertical:8
   },
+  fileNameContainer:{
+    flexDirection:'row'
+  },
   fileName:{
     marginLeft:8,
     fontSize:18

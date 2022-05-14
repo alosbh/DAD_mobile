@@ -24,16 +24,19 @@ export function Folder({data}:Props){
     
     <View style={styles.container}>
       
-      <TouchableOpacity onPress={()=>openFolder(!isOpened)} style={styles.folderNameContainer}>
-      {isOpened?<FontAwesome name="folder-open" size={24} color="black" />:<FontAwesome name="folder" size={24} color="black" />}
-      <Text style={styles.folderName}>{data.folderName}</Text>
-        </TouchableOpacity>
-      
-      
-      
-      
-        
-        
+      <TouchableOpacity 
+        onPress={()=>openFolder(!isOpened)} 
+        style={styles.folderNameContainer}
+      >
+        {
+          isOpened?
+            <FontAwesome name="folder-open" size={24} color="black" />
+          :
+            <FontAwesome name="folder" size={24} color="black" />
+        }
+        <Text style={styles.folderName}>{data.folderName}</Text>
+      </TouchableOpacity>
+
         {isOpened ? 
         
         <View>
