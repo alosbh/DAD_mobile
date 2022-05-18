@@ -1,7 +1,7 @@
 import axios,{AxiosError} from 'axios';
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "http://juansilva-001-site1.btempurl.com/"
 });
 
 

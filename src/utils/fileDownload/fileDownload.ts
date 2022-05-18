@@ -7,7 +7,10 @@ import {FileProps} from '../../components/File/index'
 
 export const downloadFile=async (data: FileProps)=>{
     
-    let fileUri = FileSystem.documentDirectory + "dummy.pdf";
+    console.log(`file URL is ${data.url}`)
+    let filename = data.url.substring(data.url.lastIndexOf('/')+1);
+    console.log(filename);
+    let fileUri = FileSystem.documentDirectory + filename;
     
     FileSystem.downloadAsync(
       data.url,
@@ -28,7 +31,8 @@ export const downloadFile=async (data: FileProps)=>{
         } else {
          MediaLibrary.addAssetsToAlbumAsync([asset], album, false).then((success)=>{
            if(success){
-             
+             console.log("Success");
+             console.log(asset);
             schedulePushNotification(asset);
            }
            else{
@@ -39,6 +43,7 @@ export const downloadFile=async (data: FileProps)=>{
         }
       } catch (e) {
         console.log("error creating asset");
+        console.log(e)
       }
 }
 
@@ -46,8 +51,8 @@ async function schedulePushNotification(asset: MediaLibrary.Asset) {
   
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "Download completed.",
-      body: `Finished download of File: ${asset.filename}`,
+      title: `${asset.filename}`,
+      body: `Download completed.`,
       data: { uri: asset.uri },
     },
     trigger: null,
