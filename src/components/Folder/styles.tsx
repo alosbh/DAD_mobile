@@ -6,7 +6,17 @@ export const styles = StyleSheet.create({
     
     
     paddingVertical:8
+  },containerControl:{
+    
+    flexDirection:'row',
+    justifyContent: 'space-between'
   },
+  icons:{
+    flexDirection:'row',
+  },
+  lastIcon:{
+    marginLeft:12
+  }, 
   folderNameContainer:{
       flexDirection:'row'
 

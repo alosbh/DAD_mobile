@@ -3,13 +3,19 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import * as Notifications from "expo-notifications";
 
-import {FileProps} from '../../components/File/index'
+import {newFileProps} from '../../components/File/index'
 
-export const downloadFile=async (data: FileProps)=>{
+export const downloadFile=async (data: newFileProps)=>{
     
     console.log(`file URL is ${data.url}`)
-    let filename = data.url.substring(data.url.lastIndexOf('/')+1);
-    console.log(filename);
+
+    let fileExtension = data.url.split("?alt")[0].split(".")[data.url.split("?alt")[0].split(".").length-1]
+    console.log(`file extension is ${fileExtension}`);
+    
+    // let filename = data.url.substring(data.url.lastIndexOf('/')+1);
+    let filename = `${data.title}.${fileExtension}`
+    console.log(`data filename is ${data.title}`)
+    console.log(`filename is ${filename}`);
     let fileUri = FileSystem.documentDirectory + filename;
     
     FileSystem.downloadAsync(

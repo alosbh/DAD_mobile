@@ -5,6 +5,11 @@ export const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     paddingHorizontal:20,
+    
+  },
+  filescontainer:{
+    flexDirection:'row',
+    justifyContent:'space-between',
     paddingVertical:8
   },
   fileNameContainer:{

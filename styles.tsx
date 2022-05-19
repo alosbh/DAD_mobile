@@ -1,23 +1,14 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '../../theme/colors';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper'
-
+import {COLORS} from './src/theme/colors'
 export const styles = StyleSheet.create({
-  container:{
-    
-    backgroundColor: 'white',
-    paddingTop: getStatusBarHeight(),
-    paddingHorizontal:20,
-    height:'100%'
-  },
-  logincontainer: {
+  container: {
     flex: 1,
     justifyContent:"center",
     flexDirection:'column',
     alignItems:"center",
     
   },
-  logininput:{
+  input:{
     backgroundColor:"#C5C5C5",
     color:"#000000",
     width:"80%",
@@ -46,4 +37,4 @@ export const styles = StyleSheet.create({
     fontWeight:"bold",
     color:COLORS.WHITE
   }
-})
+});

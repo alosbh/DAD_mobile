@@ -1,8 +1,10 @@
 import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, Button,Platform } from 'react-native';
+import {Text, View, Button,Platform, Alert, TextInput, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState,useRef } from "react";
 import {Home, DisciplineProps} from './src/screens/home'
+import {Route} from './src/Routes'
+import UserProvider, {useUser} from './src/context/userContext'
 
 import * as Device from 'expo-device';
 import FileViewer from 'react-native-file-viewer';
@@ -23,7 +25,9 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { api } from './src/services/api';
+import { authApi,api } from './src/services/api';
+import {styles} from './styles'
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -35,78 +39,94 @@ Notifications.setNotificationHandler({
 
 const channelId = "DownloadInfo";
 
-const initialDiscipline = {
-  "studentsIds": [
-    
-  ],
-  "id": "x",
-  "title": "x",
-  "description": "x",
-  "teacherId": "x"
+
+
+function HomePage(){
+  return(
+    <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
+      <Text>Welcome Page</Text>
+    </View>
+  )
 }
-
-
 
 export default function App() {
 
 
-  const [disciplines, setDisciplines] = useState<DisciplineProps[]>([initialDiscipline]);
+  const [disciplines, setDisciplines] = useState<DisciplineProps[]>([]);
+  const [authenticated, setAuthenticated] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  
+  // const signed = useUser()
   useEffect(()=>{
     async function fetchDisciplines(){
       
       const disciplinesResponse = await api.get<DisciplineProps[]>(`/Disciplines`);
      
       setDisciplines(disciplinesResponse.data)
-       
+      // let newState = disciplinesResponse.data.map((disc)=>disc);
+      //  setDisciplines(newState);
     }
     fetchDisciplines();
   },[])
   
-  // useEffect(() => {
-  //   setNotificationChannel();
-  // });
+  useEffect(() => {
+    setNotificationChannel();
+  });
 
-  // useEffect(() => {
+  useEffect(() => {
    
     
-  //   responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-  //     // console.log(response.notification.request.content.data.uri);
-  //     const path = response.notification.request.content.data.uri
-  //     console.log(`Try to open file: ${path}`);
-  //     FileViewer.open(path, { showOpenWithDialog: true })
-  //     .then(() => {
-  //         console.log("sucesso abrir arquivo");
-  //     })
-  //     .catch(error => {
-  //         console.log("nao foi possivel abrir arquivo");
-  //         console.log(error)
-  //     });
-  //   });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      // console.log(response.notification.request.content.data.uri);
+      const path = response.notification.request.content.data.uri
+      console.log(`Try to open file: ${path}`);
+      FileViewer.open(path, { showOpenWithDialog: true })
+      .then(() => {
+          console.log("sucesso abrir arquivo");
+      })
+      .catch(error => {
+          console.log("nao foi possivel abrir arquivo");
+          console.log(error)
+      });
+    });
 
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(notificationListener.current);
-  //     Notifications.removeNotificationSubscription(responseListener.current);
-  //   };
-  // }, []);
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
-    <NavigationContainer>
+
+    <UserProvider>
+      <NavigationContainer>
+        <Route />
+      </NavigationContainer>
+    
+    {/* <NavigationContainer>
        <Drawer.Navigator
+      //  screenOptions={{
+      //   headerShown: false
+      // }}
       useLegacyImplementation
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        
-      {disciplines.map((discipline)=>(<Drawer.Screen  key={discipline.id} name={discipline.title} initialParams={discipline} component={Home} />)
+        <Drawer.Screen name="Login" component={Login}></Drawer.Screen>
+        <Drawer.Screen name="Welcome" component={HomePage}></Drawer.Screen>
+        {
+          disciplines.map((discipline)=>(<Drawer.Screen  key={discipline.id} name={discipline.title} initialParams={discipline} component={Home} />)
   
-      )}
+          )
+         
+        }
+        
+      
+      {}
       
       
     </Drawer.Navigator>
-     </NavigationContainer>
-    
+     </NavigationContainer> */}
+     </UserProvider>
   );
 }
 
@@ -161,8 +181,6 @@ async function setNotificationChannel() {
   }
 }
 
-const data = [{id:1,name:"Materia 1"},{id:2,name:"Materia 2"},{id:3,name:"Materia 3"}]
-
 
 function CustomDrawerContent(props) {
   
@@ -176,5 +194,4 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
-
 
