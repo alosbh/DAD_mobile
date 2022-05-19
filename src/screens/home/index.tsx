@@ -7,10 +7,12 @@ import {
 import { Header } from '../../components/Header';
 import { FileList } from '../../components/FileList';
 import { FileControl } from '../../components/FileControl';
-
+import { Folder } from '../../components/Folder';
 import { styles } from './styles';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper'
 import {api} from '../../services/api'
+
+import {useUser} from '../../context/userContext'
 export type DisciplineProps = {
   studentsIds: string[],
   id: string,
@@ -20,59 +22,57 @@ export type DisciplineProps = {
   
 }
 
-type TopicResponse ={
+export type TopicResponse ={
   id:string,
   title: string,
   description: string,
   disciplineId: string
 }
 
+const topic = {
+  id:".",
+  title:".",
+  description:".",
+  disciplineId:""
+}
 let validTopics:TopicResponse[] = []
 export function Home(props){
 
-  const [topics, setValidTopics] = useState<TopicResponse[]>([]);
-  const [currentDisciplineID, setCurrentDisciplineID] = useState('')
-  const [currentDiscipline, setCurrentDiscipline] = useState('')
-  useEffect(() => {
-    
-
-    console.log(props.route.params.title)
-    setCurrentDiscipline(props.route.params.title);
-    setCurrentDisciplineID(props.route.params.id);
-  },[]);
+  const [topics, setTopics] = useState<TopicResponse[]>([]);
+  const {signed} = useUser();
+  const {role} = useUser();
   useEffect(()=>{
     async function fetchTopics(){
+      const topicsResponse = await api.get<TopicResponse[]>(`/Topics/Discipline/${props.route.params.id}`)
       
-      const topicsResponse = await api.get<TopicResponse[]>(`/Topics`);
-      topicsResponse.data.map((topic)=>{
-        console.log(`Current id:${currentDisciplineID}`)
-        console.log(`Current topic id:${topic.disciplineId}`)
-        if(currentDisciplineID===topic.disciplineId){
-          validTopics.push(topic)
+      .then((res)=>{
+        
+        if(Array.isArray(res.data)){
+          setTopics(res.data);
+        }else{
+          setTopics([res.data]);
         }
-
+        
       })
-      setValidTopics([]);
-      setValidTopics(validTopics);
-      // console.log(topicsResponse.data)
-      // setDisciplines(disciplinesResponse.data)
+      
+      .catch((err)=>{
+        console.log(`Error fetching topics: ${err}`)
+      });
        
     }
     fetchTopics();
   },[])
   return (
       <View style={styles.container}>
-        {/* <Header/> */}
-        {/* <FileControl/> */}
-        {/* {validTopics.map((topic)=>{console.log(topic.title)})} */}
-        {validTopics.map((topic)=>{
-          if(topic.disciplineId===currentDisciplineID){
-            return <Text key={topic.id}>{topic.title}</Text>
-          }
-          
-        })}
+       <FileControl data={{disciplineId:props.route.params.id,stateChanger:setTopics}}></FileControl>
+       {topics.map((topic)=>{
+         return (
+          <Folder key={topic.id} data={{updateTopics:setTopics,discipline:topic.disciplineId,folderId:topic.id,folderName:topic.title,files:[]}}/>
+         )
+         })}
         
-        <FileList/>
+        
+        
       </View>
     
     
