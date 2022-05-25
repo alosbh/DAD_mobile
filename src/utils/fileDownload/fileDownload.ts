@@ -2,6 +2,7 @@
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import * as Notifications from "expo-notifications";
+import * as IntentLauncher from 'expo-intent-launcher';
 
 import {newFileProps} from '../../components/File/index'
 
@@ -12,15 +13,32 @@ export const downloadFile=async (data: newFileProps)=>{
     let fileExtension = data.url.split("?alt")[0].split(".")[data.url.split("?alt")[0].split(".").length-1]
     console.log(`file extension is ${fileExtension}`);
     
-    // let filename = data.url.substring(data.url.lastIndexOf('/')+1);
+    
     let filename = `${data.title}.${fileExtension}`
     console.log(`data filename is ${data.title}`)
-    console.log(`filename is ${filename}`);
-    let fileUri = FileSystem.documentDirectory + filename;
     
+    let fileUri = FileSystem.documentDirectory + filename;
+    console.log(`filename uri ${fileUri}`);
     FileSystem.downloadAsync(
       data.url,
       fileUri,
+      
+    ).then((res)=>{
+
+      FileSystem.getContentUriAsync(res.uri).then(cUri => {
+        schedulePushNotification(filename);
+        console.log(`download completed ${cUri}`)
+        console.log(`file extensio ${fileExtension}`)
+        IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+            data: cUri,
+            flags: 1,
+            type:`application/${fileExtension}`
+         });
+      });
+
+
+    }
+
       
     )
       
@@ -29,37 +47,37 @@ export const downloadFile=async (data: newFileProps)=>{
         return;
       });
 
-      try {
-        const asset = await MediaLibrary.createAssetAsync(fileUri);
-        const album = await MediaLibrary.getAlbumAsync('Download');
-        if (album == null) {
-         MediaLibrary.createAlbumAsync('Download', asset, false);
-        } else {
-         MediaLibrary.addAssetsToAlbumAsync([asset], album, false).then((success)=>{
-           if(success){
-             console.log("Success");
-             console.log(asset);
-            schedulePushNotification(asset);
-           }
-           else{
-             console.log("error copying asset");
-           }
-         });
+      // try {
+      //   const asset = await MediaLibrary.createAssetAsync(fileUri);
+      //   const album = await MediaLibrary.getAlbumAsync('Download');
+      //   if (album == null) {
+      //    MediaLibrary.createAlbumAsync('Download', asset, false);
+      //   } else {
+      //    MediaLibrary.addAssetsToAlbumAsync([asset], album, false).then((success)=>{
+      //      if(success){
+      //        console.log("Success");
+      //        console.log(asset);
+      //       schedulePushNotification(asset);
+      //      }
+      //      else{
+      //        console.log("error copying asset");
+      //      }
+      //    });
          
-        }
-      } catch (e) {
-        console.log("error creating asset");
-        console.log(e)
-      }
+      //   }
+      // } catch (e) {
+      //   console.log("error creating asset");
+      //   console.log(e)
+      // }
 }
 
-async function schedulePushNotification(asset: MediaLibrary.Asset) {
+async function schedulePushNotification(asset: string) {
   
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: `${asset.filename}`,
+      title: `${asset}`,
       body: `Download completed.`,
-      data: { uri: asset.uri },
+      data: { uri: null },
     },
     trigger: null,
   });

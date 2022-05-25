@@ -64,7 +64,12 @@ export function Home(props){
   },[])
   return (
       <View style={styles.container}>
+       {role==='Professor'||role==='Admin' ? 
        <FileControl data={{disciplineId:props.route.params.id,stateChanger:setTopics}}></FileControl>
+        
+        :
+        <></>
+      }
        {topics.map((topic)=>{
          return (
           <Folder key={topic.id} data={{updateTopics:setTopics,discipline:topic.disciplineId,folderId:topic.id,folderName:topic.title,files:[]}}/>

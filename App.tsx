@@ -41,53 +41,24 @@ const channelId = "DownloadInfo";
 
 
 
-function HomePage(){
-  return(
-    <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
-      <Text>Welcome Page</Text>
-    </View>
-  )
-}
-
 export default function App() {
 
 
-  const [disciplines, setDisciplines] = useState<DisciplineProps[]>([]);
-  const [authenticated, setAuthenticated] = useState(false);
+  
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  // const signed = useUser()
-  useEffect(()=>{
-    async function fetchDisciplines(){
-      
-      const disciplinesResponse = await api.get<DisciplineProps[]>(`/Disciplines`);
-     
-      setDisciplines(disciplinesResponse.data)
-      // let newState = disciplinesResponse.data.map((disc)=>disc);
-      //  setDisciplines(newState);
-    }
-    fetchDisciplines();
-  },[])
-  
-  useEffect(() => {
-    setNotificationChannel();
-  });
 
   useEffect(() => {
-   
-    
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      // console.log(response.notification.request.content.data.uri);
-      const path = response.notification.request.content.data.uri
-      console.log(`Try to open file: ${path}`);
-      FileViewer.open(path, { showOpenWithDialog: true })
-      .then(() => {
-          console.log("sucesso abrir arquivo");
-      })
-      .catch(error => {
-          console.log("nao foi possivel abrir arquivo");
-          console.log(error)
-      });
+      console.log(response);
     });
 
     return () => {
@@ -102,30 +73,6 @@ export default function App() {
       <NavigationContainer>
         <Route />
       </NavigationContainer>
-    
-    {/* <NavigationContainer>
-       <Drawer.Navigator
-      //  screenOptions={{
-      //   headerShown: false
-      // }}
-      useLegacyImplementation
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen name="Login" component={Login}></Drawer.Screen>
-        <Drawer.Screen name="Welcome" component={HomePage}></Drawer.Screen>
-        {
-          disciplines.map((discipline)=>(<Drawer.Screen  key={discipline.id} name={discipline.title} initialParams={discipline} component={Home} />)
-  
-          )
-         
-        }
-        
-      
-      {}
-      
-      
-    </Drawer.Navigator>
-     </NavigationContainer> */}
      </UserProvider>
   );
 }
@@ -133,11 +80,16 @@ export default function App() {
 async function registerForPushNotificationsAsync() {
   let token;
   if (Device.isDevice) {
+    console.log("GETTING PERMISSIONS!")
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    console.log(`existing status: ${existingStatus}`)
     let finalStatus = existingStatus;
+    
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
+      console.log("STATUS")
+      console.log(`final status: ${finalStatus}`)
     }
     if (finalStatus !== 'granted') {
       alert('Failed to get push token for push notification!');

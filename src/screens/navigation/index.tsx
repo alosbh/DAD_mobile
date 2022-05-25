@@ -3,9 +3,11 @@ import React, {useEffect, useState} from 'react';
 import {
   Button,
   Text,
-  View
+  View,
+  Image,
+  TouchableOpacity
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -16,8 +18,39 @@ import {DisciplineProps} from '../home'
 import {api} from '../../services/api'
 import { useUser } from '../../context/userContext';
 import { Home } from '../home';
+import { AntDesign } from '@expo/vector-icons';
+import { styles } from './styles';
+function LogoTitle() {
+
+  const {setSigned, setName,role,name} = useUser();
+  return (
+    // <Image
+    //   style={{ width: 50, height: 50 }}
+    //   source={require('@expo/snack-static/react-native-logo.png')}
+    // />
+    <View style={styles.header}>
+        <TouchableOpacity
+              
+              onPress={()=>setSigned(false)}
+              >
+                <View style={styles.logout}>
+                 <Text>Logout</Text>
+                  <AntDesign
+                    style={styles.logoutIcon}
+                  name='logout'
+                size={24} 
+                  color="black" />
+                </View>
+                
+            </TouchableOpacity>
+    </View>
+    
+  );
+}
+
 export function MainNav(){
 
+  
   const [disciplines, setDisciplines] = useState<DisciplineProps[]>([]);
   useEffect(()=>{
     async function fetchDisciplines(){
@@ -25,23 +58,20 @@ export function MainNav(){
       const disciplinesResponse = await api.get<DisciplineProps[]>(`/Disciplines`);
      
       setDisciplines(disciplinesResponse.data)
-      // let newState = disciplinesResponse.data.map((disc)=>disc);
-      //  setDisciplines(newState);
     }
     fetchDisciplines();
   },[])
 
+  
+
   return (
     <NavigationContainer independent={true}>
        <Drawer.Navigator
-      //  screenOptions={{
-      //   headerShown: false
-      // }}
       useLegacyImplementation
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         
-        <Drawer.Screen name="Welcome" component={HomePage}></Drawer.Screen>
+        <Drawer.Screen name="Welcome" options={{ headerTitle: (props) => <LogoTitle {...props} /> }} component={HomePage}></Drawer.Screen>
         {
           disciplines.map((discipline)=>(<Drawer.Screen  key={discipline.id} name={discipline.title} initialParams={discipline} component={Home} />)
   
@@ -72,11 +102,12 @@ const Drawer = createDrawerNavigator();
 
 function HomePage(){
 
-  const {setSigned, setName} = useUser();
+  const {setSigned, setName,role,name} = useUser();
   return(
     <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
-      <Text>Navegue pelas disciplinas no menu lateral</Text>
-      
+      <Text>Bem Vindo!</Text>
+      <Text>{`Usuario: ${name}`}</Text>
+      <Text>{`Perfil: ${role}`}</Text>
     </View>
   )
 }

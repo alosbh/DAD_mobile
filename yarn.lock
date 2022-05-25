@@ -1544,6 +1544,13 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-community/datetimepicker@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-4.0.0.tgz#4629ac3d8d54b4024385f2b2a30bbe13640c6ed3"
+  integrity sha512-q3JfDHX5PI0AxFeMsB6jcHSXODloXAqBVsOfkIvm+YbAe1TUs/xZ3qGazsKVBk9EdFyHO4k+S1Q8tQkEnk2YrQ==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -2816,6 +2823,14 @@ expo-device@~4.1.0:
   dependencies:
     ua-parser-js "^0.7.19"
 
+expo-document-picker@~10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-10.1.3.tgz#68a82635e9473eb19f128193f1111e7400055a7d"
+  integrity sha512-JKARJBnQ5Aug92hg2MFKrM2LqiMQabcUBYJwBhwSuc0A7dNUeprw0hkaOK0D9Fk7Ae9t+flRX0N5R/aADek3HA==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    uuid "^3.3.2"
+
 expo-error-recovery@~3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-3.0.5.tgz#1802b733e998606a8fcfb0abe6682c334319ef75"
@@ -2836,10 +2851,27 @@ expo-font@~10.0.5:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-intent-launcher@~10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/expo-intent-launcher/-/expo-intent-launcher-10.1.3.tgz#7b98d01f066f698c83a6ae2addc07987834071b9"
+  integrity sha512-Gc3Zs4HvsyZJahbQoC0/4DSQ+EcGTFfo4FF0J+j6R0eS32DgdKWq7ErHyAQFDmpmLxGH+M13imoBP8CglENOWg==
+
+expo-json-utils@~0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/expo-json-utils/-/expo-json-utils-0.2.1.tgz#a8d15181e361f3fc782d5241ce381851bab4465b"
+  integrity sha512-wU7gXGtaUlyxFLTp5e3PbnJB90/92r6gEc2BuMHdqE0OxhTQKyKzRszk2szCsdkeI7L4XntvZhCs1Px+gL1gvA==
+
 expo-keep-awake@~10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.2.tgz#706bda839782bb3e8ad4cbe43bde471a56368813"
   integrity sha512-Ro1lgyKldbFs4mxhWM+goX9sg0S2SRR8FiJJeOvaRzf8xNhrZfWA00Zpr+/3ocCoWQ3eEL+X9UF4PXXHf0KoOg==
+
+expo-manifests@~0.2.2:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/expo-manifests/-/expo-manifests-0.2.4.tgz#28aa7a0b21d8b932e1a49c836cfc31b5a9cd1f9c"
+  integrity sha512-8PrMPyvElKXflYd1ApDHJR9JF0SR996iVEVQgHAMLzVP7OqEAM6dQaFeqrRqVn/DSsxEWkJTpxv8WJ5NWrT4Lg==
+  dependencies:
+    expo-json-utils "~0.2.0"
 
 expo-media-library@~14.0.0:
   version "14.0.1"
@@ -2901,6 +2933,31 @@ expo-status-bar@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.2.0.tgz#16e73205da563f9536f562e439081e30e318a82e"
   integrity sha512-pVZZ/kDCXFK79E4dCtRecs3XLC8aiwlciutSd/fFmUPJSQZ1Txia6hlKajPt0GAYft8/YnT0V3URXzWZOBniYQ==
+
+expo-structured-headers@~2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-2.1.1.tgz#bdbf8752af36c7d3203540476af55562546b6aeb"
+  integrity sha512-0up4sfHHsiK2YLpTwD/ssUD2oeSGzVUeARnu/itKAJO4zHqjpc+m8N1s7HPSJcdC7fdDpMjzcdrDasT0o+cOAw==
+
+expo-updates-interface@~0.5.0:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.5.2.tgz#5bb1e9be05db8013d5904fa8ed636c8c40604290"
+  integrity sha512-8BTaTl5pE5DYvqbJubnSH3rL55ay+wonPZe53f8CGj4PN3bV4UAQXbG9wFTDBtOaT982oyUUWdjUh/a1P3EVDw==
+
+expo-updates@~0.11.7:
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.11.7.tgz#c267ce8818d42a997d49a1e24b11b4887a2fb17b"
+  integrity sha512-zmteCFOBj2OtDOZO5eGgFHR4EXZvFUv5DM56aMkZ6+PE/fo+8ZjNZLxkQWD33GXmXs/9jLCLKXPj2+6kCJvyhg==
+  dependencies:
+    "@expo/config" "^6.0.6"
+    "@expo/config-plugins" "^4.0.2"
+    "@expo/metro-config" "~0.2.6"
+    expo-manifests "~0.2.2"
+    expo-structured-headers "~2.1.0"
+    expo-updates-interface "~0.5.0"
+    fbemitter "^2.1.1"
+    resolve-from "^5.0.0"
+    uuid "^3.4.0"
 
 expo@~44.0.0:
   version "44.0.6"
@@ -4518,6 +4575,11 @@ mockdate@^3.0.2:
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.5.tgz#789be686deb3149e7df2b663d2bc4392bc3284fb"
   integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
 
+moment@^2.22.0:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
+  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -5049,6 +5111,20 @@ react-native-codegen@^0.0.6:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-datepicker@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
+  integrity sha1-WNCCJZGgrJsyq6CCZQIioO4pZp0=
+  dependencies:
+    moment "^2.22.0"
+
+react-native-document-picker@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-8.1.0.tgz#e167a98b6fcdd1aee08597793029101d674eab83"
+  integrity sha512-FdaehvEoqkVkMTkIy09wpgHUHh9SskI1k8ug8Dwkwk7MJ+XxzrphAk/mXZtu5RkM1Iwxmd82QfwiQJxrZ2LSVg==
+  dependencies:
+    invariant "^2.2.4"
 
 react-native-file-viewer@^2.1.5:
   version "2.1.5"

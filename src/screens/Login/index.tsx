@@ -7,9 +7,11 @@ import {
 
 import { styles } from './styles';
 import {authApi} from '../../services/api'
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 export function Login(){
 
   async function Authenticate(){
+    
     
     let credentials = {"email":user,"senha":pass}
     // console.log(`Credenciais: ${credentials.email} ${credentials.senha}`)
@@ -31,8 +33,9 @@ export function Login(){
 
       authApi.get(`/Usuario/${userId}`,config).then((res)=>{
         console.log("sucesso eprfil usuario");
-        console.log(res.data.role)
+        console.log(res.data)
         setRole(res.data.role)
+        setName(res.data.nome)
       }).catch((err)=>{
         console.log("erro perfil user")
         console.log(err)
@@ -47,6 +50,7 @@ export function Login(){
   
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -63,14 +67,20 @@ export function Login(){
             onChangeText={setPass}
             value={pass}
             placeholder="Password"
-            
+            secureTextEntry={true}
           />
           <TouchableOpacity
-      style={styles.submit}
-      onPress={()=>Authenticate()}>
-       
-        <Text style={styles.buttontext}>Submit</Text>
-      </TouchableOpacity>
+          style={styles.submit}
+          onPress={()=>Authenticate()}>
+          
+            <Text style={styles.buttontext}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          
+          onPress={()=>navigation.navigate('Register')}>
+          
+            <Text >Registrar</Text>
+          </TouchableOpacity>
     </View>
   );
 }
